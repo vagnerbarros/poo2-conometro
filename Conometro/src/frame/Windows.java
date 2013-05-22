@@ -14,8 +14,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
+import util.Tabela;
 import engine.Time;
 
 public class Windows extends JFrame implements ActionListener {
@@ -29,12 +30,13 @@ public class Windows extends JFrame implements ActionListener {
 	private JCheckBox chckbxDecrescent;
 	private JButton btnSave;
 	private List<String> tempos;
-	private JTextArea textArea;
+	private JScrollPane scrollPane;
+	private Tabela tabela;
 	
 	public Windows() {
 		super("Time");
+		setPreferredSize(new Dimension(300, 400));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setPreferredSize(new Dimension(100, 300));
 		
 		tempos = new ArrayList<String>();
 		
@@ -70,14 +72,18 @@ public class Windows extends JFrame implements ActionListener {
 		
 		time = new Time(label, 0, 0);
 		
-		textArea = new JTextArea();
-		panel.add(textArea);
+		scrollPane = new JScrollPane();
+		panel.add(scrollPane);
 		
-		setVisible(true);
+		tabela = new Tabela();
+		tabela.getColumnModel().getColumn(0).setResizable(false);
+		tabela.getColumnModel().getColumn(1).setResizable(false);
+		scrollPane.setViewportView(tabela);
+		
 		pack();
-		setResizable(false);
+		setVisible(true);
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
@@ -97,10 +103,7 @@ public class Windows extends JFrame implements ActionListener {
 		} else if (command.equals(btnSave.getActionCommand())) {
 			tempos.add(time.getTime());
 			Collections.sort(tempos);
-			textArea.setText("");
-			for (String t : tempos) {
-				//add no textArea
-			}
+			tabela.montarTabela(tempos);
 		}
 		repaint();
 	}
