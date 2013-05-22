@@ -2,6 +2,8 @@ package engine;
 
 import javax.swing.JLabel;
 
+import util.Formato;
+
 public class Time implements Runnable {
 
 	private boolean isDecrescent;
@@ -39,8 +41,7 @@ public class Time implements Runnable {
 						hora = 0;
 						isReset = false;
 					}
-					String timerStr = formatTime(hora) + ":" + formatTime(minuto) + ":"
-							+ formatTime(segundo);
+					String timerStr = Formato.formatTime(hora, minuto, segundo);
 
 					time.setText(timerStr);
 					time.revalidate();
@@ -111,16 +112,6 @@ public class Time implements Runnable {
 
 	public void setDecrescent(boolean isDecrescent) {
 		this.isDecrescent = isDecrescent;
-	}
-
-	private String formatTime(Integer i) {
-		String retorno = null;
-		if (i < 10) {
-			retorno = "0" + i;
-		} else {
-			retorno = i.toString();
-		}
-		return retorno;
 	}
 
 	public String getTime() {
