@@ -117,4 +117,13 @@ public class Time implements Runnable {
 	public String getTime() {
 		return time.getText();
 	}
+
+	public void setTime(String time) {
+		hora = Integer.parseInt(time.substring(0, 2));
+		minuto = Integer.parseInt(time.substring(3, 5));
+		segundo = Integer.parseInt(time.substring(6, 8));
+		
+		this.time.setText(time);
+	}
+	
 }
